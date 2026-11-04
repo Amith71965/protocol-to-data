@@ -1,0 +1,89 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        run: uv python install 3.12
+
+      - name: Install dependencies
+        run: uv sync --all-extras
+
+      - name: Lint
+        run: uv run ruff check .
+
+      - name: Check formatting
+        run: uv run ruff format --check .
+
+      # The study data is ~120 MB and pinned by checksum, so it is fetched once
+      # per manifest change rather than on every run. Without it the data-backed
+      # tests would skip, and the assertions that matter most are exactly those.
+      - name: Restore study data
+        id: data-cache
+        uses: actions/cache@v4
+        with:
+          path: data/raw
+          key: study-data-${{ hashFiles('docs/data_manifest.json') }}
+
+      - name: Download study data
+        if: steps.data-cache.outputs.cache-hit != 'true'
+        run: uv run python scripts/download_data.py
+
+      - name: Verify checksums
+        run: uv run python scripts/download_data.py
+
+      - name: Build the SDTM layer
+        run: uv run python scripts/build_sdtm.py
+
+      - name: Validate conformance
+        run: uv run python scripts/validate_sdtm.py
+
+      - name: Build the gold set
+        run: uv run python scripts/build_gold_set.py
+
+      - name: Check deviations
+        run: uv run python scripts/check_deviations.py
+
+      - name: Tests
+        run: uv run pytest -q
+
+      - name: Confirm the data-backed tests actually ran
+        run: |
+          # A silent skip here would hide the project's strongest assertions.
+          uv run pytest -q -m requires_data --no-header | tee /tmp/data-tests.txt
+          if grep -qE '[0-9]+ skipped' /tmp/data-tests.txt; then
+            echo "::error::Data-backed tests skipped; the study data was not available."
+            exit 1
+          fi
+
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pipeline-reports
+          path: |
+            reports/
+            docs/mapping_spec.md
+            docs/validation_rules.md
+            docs/data_inventory.md
+          if-no-files-found: warn
