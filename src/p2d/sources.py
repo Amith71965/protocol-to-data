@@ -118,7 +118,7 @@ DOC_ARTIFACTS: list[Artifact] = [
         url=f"{DOCS_BASE}/dataguide.pdf",
         filename="docs/dataguide.pdf",
         description="Pilot data guide",
-        expected_bytes=92_216,
+        expected_bytes=92_311,
     ),
 ]
 
