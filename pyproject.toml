@@ -33,6 +33,9 @@ packages = ["src/p2d"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q --strict-markers"
+# Every test is a function. Without this, imported classes whose names begin
+# with "Test" (such as the Testability enum) are picked up as test classes.
+python_classes = []
 markers = [
     "live: hits a real network or LLM API; deselected by default in CI",
     "requires_data: needs the downloaded study data in data/raw; skipped when absent",
