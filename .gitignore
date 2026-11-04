@@ -13,10 +13,14 @@ brag-output-*/
 # archify working directories
 .archify/
 
-# Generated reports are reproducible from the pipeline
+# Generated reports are reproducible from the pipeline, so the bulky machine-readable
+# ones stay out. The two prose reports the README cites are committed, so a reader can
+# audit the coverage reasons and the extraction metrics without running anything.
 reports/*.csv
 reports/*.md
 !reports/.gitkeep
+!reports/coverage.md
+!reports/extraction_metrics.md
 
 # Python
 __pycache__/
