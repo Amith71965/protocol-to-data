@@ -1,0 +1,90 @@
+{
+  "csr": {
+    "bytes": 5985424,
+    "sha256": "0cab016c76abb3dcaef31110611c95dbd9cd00df083b35e6d28fd69fca0d842d"
+  },
+  "ct.sdtm.txt": {
+    "bytes": 13848826,
+    "sha256": "9e8117a90e28e5aade3ac2d52fe1b60adfcccc92a8894891f04ad05c7cf1f88d"
+  },
+  "dataguide": {
+    "bytes": 92311,
+    "sha256": "045d5c2cfd72d0fc147e84c1498aec7d6e52a7a6cf48e42ede77dc26d0122edc"
+  },
+  "define.xml": {
+    "bytes": 262416,
+    "sha256": "b55f196e37a379beaab4bdef4b5354b10ae3d756e259aedc2b1edda8e45f2f61"
+  },
+  "sdtm.cm": {
+    "bytes": 3758720,
+    "sha256": "bb31e91b93a8e4854bd66270cb4d1677a4ab59add30ec8cdbebb3491c18f1582"
+  },
+  "sdtm.dm": {
+    "bytes": 110800,
+    "sha256": "7327baea97fd532d02385248da0c7240402e770099507e2c3a88e2ac706c02a6"
+  },
+  "sdtm.ds": {
+    "bytes": 146800,
+    "sha256": "0dea6d298cf248c953c556ff61d0ade5bb133044761a37709a136e2d9ef580e8"
+  },
+  "sdtm.ex": {
+    "bytes": 87120,
+    "sha256": "37daacb3fdafba7b7ac7e254b51c43c4576f9ee45c87264da6b85e589ad7b8dc"
+  },
+  "sdtm.lb": {
+    "bytes": 34262560,
+    "sha256": "47394de7c6484bdf3d5b15c5fe580ca49125707475e6352d30afd5d75c2d7830"
+  },
+  "sdtm.mh": {
+    "bytes": 1586960,
+    "sha256": "d4c3539c2e9e14614b3261cea9564e004ef09ffc211e70320e2a1880aba18d90"
+  },
+  "sdtm.qs": {
+    "bytes": 33849760,
+    "sha256": "a1a68fbebbceb6237a8fba0f96b6b9ab8d476817200cde5a0b625966ac23cd6e"
+  },
+  "sdtm.relrec": {
+    "bytes": 110160,
+    "sha256": "2376dff7eb74d917eb6fd90ca4690ae82227d98c59235eb1b56e499b96c64284"
+  },
+  "sdtm.sc": {
+    "bytes": 30160,
+    "sha256": "9dca4cc3ef9631cbdbdd7b82db4a5f3cf7e52006da00f159fd293b53ae537957"
+  },
+  "sdtm.se": {
+    "bytes": 493120,
+    "sha256": "0cfc6862368e4f4ffbd80baea626714ab93fd1793707bc89430b32a6c3d62728"
+  },
+  "sdtm.suppdm": {
+    "bytes": 1056720,
+    "sha256": "8258ec783c2dbc3dc0d7a426ad05f1d19f26ff84cf2eef797e7c6bfff1725f06"
+  },
+  "sdtm.sv": {
+    "bytes": 286560,
+    "sha256": "ea831a4aceede71d26b6cc2d2a5bb04378dc91fcfeafae2aee6edc4fcb40fb52"
+  },
+  "sdtm.ta": {
+    "bytes": 10560,
+    "sha256": "848c3d2e809b3fa91044a811717a57cd1f53e608000730792c102b646d1f5a4c"
+  },
+  "sdtm.te": {
+    "bytes": 8880,
+    "sha256": "21ab1ae0d2dd629c618feda8a3fc09c88870d0bdd136e92d757fb20f9d9425e8"
+  },
+  "sdtm.ti": {
+    "bytes": 9200,
+    "sha256": "c9ebf759ff99ca220a92c23d371a59472532dd47d9c278316ff353b8c2087492"
+  },
+  "sdtm.ts": {
+    "bytes": 22160,
+    "sha256": "517ceea43a3c363ed1542df370f84a50bbcba00c7ca35973e93631edc0855afc"
+  },
+  "sdtm.tv": {
+    "bytes": 13520,
+    "sha256": "127aa654b9de5c80b62acd153d32877a8e32e127280933150a7a0d28bdb75d4a"
+  },
+  "sdtm.vs": {
+    "bytes": 24014960,
+    "sha256": "eb54bb58944c1d725e74c7c0f91a9902212b072e8622c29976505283a8e64cd9"
+  }
+}
