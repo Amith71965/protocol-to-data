@@ -1,0 +1,33 @@
+# Data — never committed. Fetch with scripts/download_data.py (approx 100 MB).
+# `data/*` rather than `data/` so git still descends and the gold-set negation applies.
+data/*
+!data/gold/
+
+# Secrets
+.env
+
+# brag render output (videos) — excluded from git by project convention
+brag-output/
+brag-output-*/
+
+# archify working directories
+.archify/
+
+# Generated reports are reproducible from the pipeline
+reports/*.csv
+reports/*.md
+!reports/.gitkeep
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# OS / editor
+.DS_Store
