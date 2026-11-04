@@ -27,3 +27,18 @@ def clean_env(monkeypatch: pytest.MonkeyPatch, tmp_path):
         monkeypatch.delenv(name, raising=False)
     monkeypatch.chdir(tmp_path)
     return monkeypatch
+
+
+@pytest.fixture(scope="session")
+def raw_dir():
+    """The downloaded study data, or skip.
+
+    Data-backed assertions are the strongest evidence this project has, so they
+    are real tests rather than prose. They need ``scripts/download_data.py`` to
+    have been run; CI restores the same directory from cache.
+    """
+    from p2d.paths import RAW_DIR
+
+    if not (RAW_DIR / "sdtm" / "dm.xpt").exists():
+        pytest.skip("study data not downloaded; run scripts/download_data.py")
+    return RAW_DIR
