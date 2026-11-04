@@ -54,7 +54,7 @@ HACHINSKI = Instrument(
 INSTRUMENTS: dict[str, Instrument] = {MMSE.total_testcd: MMSE, HACHINSKI.total_testcd: HACHINSKI}
 
 
-class IncompleteInstrument(ValueError):
+class IncompleteInstrumentError(ValueError):
     """A subject has some but not all of an instrument's items."""
 
 
@@ -89,7 +89,7 @@ def derive_total(
 
     if require_complete and not totals["complete"].all():
         incomplete = int((~totals["complete"]).sum())
-        raise IncompleteInstrument(
+        raise IncompleteInstrumentError(
             f"{instrument.name}: {incomplete} subject-visit(s) have fewer than "
             f"{instrument.n_items} items; totals for those are not derived."
         )

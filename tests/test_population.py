@@ -24,7 +24,7 @@ def test_demographics_arm_split(raw_dir) -> None:
         "Xanomeline Low Dose": 84,
         "Screen Failure": 52,
     }
-    assert 86 + 84 + 84 + 52 == len(dm)
+    assert len(dm) == 86 + 84 + 84 + 52
 
 
 def test_randomized_population_is_254(raw_dir) -> None:

@@ -9,8 +9,8 @@ import pandas as pd
 
 from p2d.validate.issues import Issue, to_frame
 from p2d.validate.rules import ALL_RULES
-from p2d.validate.terminology import CODELIST_BINDINGS, UNBOUND_VARIABLES
 from p2d.validate.runner import counts_by_severity, summarise
+from p2d.validate.terminology import CODELIST_BINDINGS, UNBOUND_VARIABLES
 
 
 def render_rules_markdown(issues: list[Issue]) -> str:

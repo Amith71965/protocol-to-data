@@ -56,7 +56,7 @@ def test_sequence_numbers_start_at_one_within_each_subject() -> None:
 
     result = sequence_number(frame, "USUBJID", ["VISITNUM"])
 
-    assert dict(zip(frame["USUBJID"] + frame["VISITNUM"].astype(str), result)) == {
+    assert dict(zip(frame["USUBJID"] + frame["VISITNUM"].astype(str), result, strict=True)) == {
         "a1": 1.0,
         "a2": 2.0,
         "b1": 1.0,

@@ -5,7 +5,7 @@ from __future__ import annotations
 import pandas as pd
 import pytest
 
-from p2d.mapping.scores import MMSE, IncompleteInstrument, derive_total
+from p2d.mapping.scores import MMSE, IncompleteInstrumentError, derive_total
 
 
 def _items(scores: list[float], subject: str = "01-701-1015") -> pd.DataFrame:
@@ -39,7 +39,7 @@ def test_a_zero_scored_item_counts_as_zero() -> None:
 
 def test_incomplete_instrument_is_not_scored() -> None:
     """Summing 5 of 6 items would understate the score and flip eligibility."""
-    with pytest.raises(IncompleteInstrument, match="fewer than 6"):
+    with pytest.raises(IncompleteInstrumentError, match="fewer than 6"):
         derive_total(_items([5, 5, 3, 5, 3]), MMSE)
 
 

@@ -61,7 +61,7 @@ def test_outcome_order_is_stable_when_a_category_is_absent() -> None:
 def test_deviations_are_counted_by_distinct_subject(deviations) -> None:
     counts = data.deviations_by_criterion(deviations)
 
-    assert dict(zip(counts["criterion_id"], counts["subjects"])) == {"INCL03": 1, "EXCL27": 1}
+    assert dict(zip(counts["criterion_id"], counts["subjects"], strict=True)) == {"INCL03": 1, "EXCL27": 1}
 
 
 def test_empty_deviations_do_not_raise(deviations) -> None:
@@ -104,7 +104,7 @@ def test_coverage_table_marks_criteria_without_a_rule(evaluations) -> None:
 
     table = data.coverage_table(gold, evaluations)
 
-    assert dict(zip(table["criterion_id"], table["has_rule"])) == {
+    assert dict(zip(table["criterion_id"], table["has_rule"], strict=True)) == {
         "INCL03": True,
         "EXCL27": True,
         "EXCL16": False,

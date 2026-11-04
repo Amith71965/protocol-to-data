@@ -28,7 +28,7 @@ from p2d.deviations.rules import EXECUTABLE_RULES
 from p2d.paths import GOLD_DIR, REPORTS_DIR, SDTM_DIR, ensure_dirs
 
 
-def render_coverage(cov, summary, gold) -> str:
+def render_coverage(cov, summary) -> str:
     lines: list[str] = []
     add = lines.append
     add("# Criteria coverage")
@@ -108,7 +108,7 @@ def main() -> int:
 
     cov = coverage(evaluations, gold, context)
     summary = per_criterion_summary(evaluations, gold)
-    (REPORTS_DIR / "coverage.md").write_text(render_coverage(cov, summary, gold))
+    (REPORTS_DIR / "coverage.md").write_text(render_coverage(cov, summary))
 
     print(
         f"{len(EXECUTABLE_RULES)} of {cov.total_criteria} criteria have an executable rule "
