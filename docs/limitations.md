@@ -69,6 +69,11 @@ The gold set's 31 testability labels are a single person's reading of each crite
 inventory. There is no second annotator and no inter-rater agreement figure, so the extraction
 metrics measure agreement with one judgement, not with ground truth.
 
+The reported figures are also **one run of one model** (`anthropic/claude-sonnet-5.5` via
+OpenRouter). Sampling is not deterministic, so a re-run may score differently; the response is cached
+by a hash of the request so the committed numbers and the cached response stay consistent with each
+other, but they are a single observation rather than an average over runs or models.
+
 ## 7. Scope
 
 One study, one protocol. The mapping configuration, the eligibility rules and the data inventory in

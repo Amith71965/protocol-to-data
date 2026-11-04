@@ -54,6 +54,7 @@ Both are asserted in the test suite, so they cannot quietly stop being found.
 | Mapping | **DM, VS and QS round-trip exactly** (67 variables); LB reconciles on 18 of 22 |
 | Validation | 9 rules; **1,828 findings**, all one real defect (below) |
 | Criteria | 31 criteria hand-labelled: 2 testable, 21 partially, 8 not testable |
+| Extraction | **31 of 31 found**, none invented (precision and recall 100%); testability labels **77% correct** |
 | Deviations | **115 flagged** across 3 criteria, over 254 randomized subjects |
 | Coverage | **7 of 31 criteria (23%)** have an executable rule |
 
@@ -62,6 +63,39 @@ Both are asserted in the test suite, so they cannot quietly stop being found.
 The validator flags 1,828 laboratory records using `BUN` as the test code. `BUN` is **not** a valid
 CDISC Laboratory Test Code submission value — the standard term is `UREAN`. That is a genuine
 conformance issue in published regulatory-grade data, found by a rule with a test behind it.
+
+### Where the model over-claims
+
+Run against the protocol's eligibility prose, the extraction found **all 31 published criteria and
+invented none** — precision and recall are both 100%, aligned on the study's own `IETESTCD`
+identifiers rather than on labels of our choosing.
+
+What it gets wrong is more interesting than what it gets right. Of its seven labelling errors, five
+run the same direction: it calls a *partially* testable criterion fully testable.
+
+| Criterion | Gold label | Model said |
+|---|---|---|
+| `EXCL14` a history of mental illness within the last 5 years | partially testable | **testable** |
+| `EXCL15` a history of syncope within the last 5 years | partially testable | **testable** |
+| `EXCL23` a known history of HIV within the last 5 years | partially testable | **testable** |
+| `EXCL24` a history of serious infectious disease within the last 5 years | partially testable | **testable** |
+| `EXCL30` A1C above the central laboratory reference range | partially testable | **testable** |
+
+Each looks answerable, and none is. Medical history is MedDRA-coded with onset dates, so "a history
+of X within the last 5 years" reads like a query — but of the 1,818 medical-history records, **254
+are uncoded and only 311 carry a full start date**: 859 have no start date at all and 517 record the
+year alone. The data can show that a condition is present; it cannot show that one is absent, and it
+usually cannot place it inside a five-year window. `EXCL30` fails differently, and worse: the
+protocol's threshold is a proprietary sponsor reference range that is not published, so the study's
+own `LBSTNRHI` stands in for it — and A1C is measured for only **5 of the 254 randomized subjects**,
+so the rule that does exist returns *not evaluable* for the other 249.
+
+A rule built on the optimistic label would return clean passes it has not earned. This is why the
+extraction is **scored rather than trusted**: the seven executable rules were written by hand against
+the gold set, and the model's output is measured against that set instead of compiled into checks.
+
+Measured on one run of `anthropic/claude-sonnet-5.5` via OpenRouter; the full confusion matrix is in
+[`reports/extraction_metrics.md`](reports/extraction_metrics.md).
 
 ### Why coverage is 23% and not higher
 
