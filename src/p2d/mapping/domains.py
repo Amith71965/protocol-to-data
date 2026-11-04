@@ -110,3 +110,36 @@ def roundtrip(
         reference_dates=references,
         conversions=conversions,
     )
+
+
+def attach_carried(
+    original: pd.DataFrame,
+    rebuilt: pd.DataFrame,
+    spec: FindingsDomain,
+    key: list[str],
+) -> pd.DataFrame:
+    """Re-attach the variables a CRF cannot determine.
+
+    "Carried from source" has to mean exactly that: the published value is
+    joined back onto the reconstruction. Without this the mapped dataset would
+    simply be missing its record sequence, and traceability back to the
+    published data would break.
+
+    The two frames hold the same records, so they are aligned by sorting on the
+    domain's natural key rather than merged, which would multiply rows wherever
+    the key repeats.
+    """
+    carried = [c for c in spec.not_reproducible if c in original.columns]
+    if not carried:
+        return rebuilt
+    if len(original) != len(rebuilt):
+        raise ValueError(
+            f"{spec.domain}: cannot carry {carried} — "
+            f"{len(original)} published records against {len(rebuilt)} rebuilt."
+        )
+
+    left = original.sort_values(key).reset_index(drop=True)
+    right = rebuilt.sort_values(key).reset_index(drop=True)
+    for column in carried:
+        right[column] = left[column].to_numpy()
+    return right

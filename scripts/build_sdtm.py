@@ -21,6 +21,7 @@ from p2d.mapping import demographics, spec
 from p2d.mapping.domains import (
     COMPARISON_KEYS,
     FINDINGS_DOMAINS,
+    attach_carried,
     reference_dates,
     roundtrip,
 )
@@ -70,6 +71,9 @@ def main() -> int:
 
         _write_crf(to_crf(frame, domain_spec), name.lower())
         rebuilt = roundtrip(frame, domain_spec, references)
+        rebuilt = attach_carried(
+            split.collected, rebuilt, domain_spec, COMPARISON_KEYS[name]
+        )
         rebuilt.to_parquet(SDTM_DIR / f"{name.lower()}.parquet", index=False)
 
         report = compare(
