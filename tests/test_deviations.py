@@ -47,9 +47,7 @@ def context(dm_frame, qs=None, lb=None) -> EvaluationContext:
     empty_qs = pd.DataFrame(
         columns=["USUBJID", "QSCAT", "QSTESTCD", "QSSTRESN", "VISIT", "VISITNUM", "QSDTC"]
     )
-    empty_lb = pd.DataFrame(
-        columns=["USUBJID", "LBTESTCD", "LBBLFL", "LBNRIND", "LBORRES"]
-    )
+    empty_lb = pd.DataFrame(columns=["USUBJID", "LBTESTCD", "LBBLFL", "LBNRIND", "LBORRES"])
     return build_context(
         dm_frame,
         empty_qs if qs is None else qs,
@@ -57,10 +55,18 @@ def context(dm_frame, qs=None, lb=None) -> EvaluationContext:
     )
 
 
-SUBJECT = {"USUBJID": "s1", "SITEID": "701", "ARM": "Placebo", "AGE": 72.0, "SEX": "F", "RFICDTC": ""}
+SUBJECT = {
+    "USUBJID": "s1",
+    "SITEID": "701",
+    "ARM": "Placebo",
+    "AGE": 72.0,
+    "SEX": "F",
+    "RFICDTC": "",
+}
 
 
 # --- population ----------------------------------------------------------------
+
 
 def test_screen_failures_are_excluded_from_evaluation() -> None:
     """The study excluded them correctly; flagging one would be a false positive."""
@@ -78,6 +84,7 @@ def test_screen_failures_never_appear_in_any_outcome() -> None:
 
 
 # --- INCL03, the flagship rule --------------------------------------------------
+
 
 def test_mmse_within_range_passes() -> None:
     frame = dm([SUBJECT])
@@ -122,13 +129,16 @@ def test_incomplete_questionnaire_is_not_evaluable() -> None:
 
 
 def test_every_evaluation_names_its_source() -> None:
-    result = incl03_mmse_in_range(context(dm([SUBJECT]), qs=mmse_items("s1", [5, 5, 3, 5, 3, 1])))[0]
+    result = incl03_mmse_in_range(context(dm([SUBJECT]), qs=mmse_items("s1", [5, 5, 3, 5, 3, 1])))[
+        0
+    ]
 
     assert result.source_domain == "QS"
     assert result.source_key
 
 
 # --- INCL01 --------------------------------------------------------------------
+
 
 def test_age_at_the_minimum_passes() -> None:
     result = incl01_age_at_least_fifty(context(dm([{**SUBJECT, "AGE": 50.0}])))[0]
@@ -150,6 +160,7 @@ def test_age_rule_states_what_it_does_not_check() -> None:
 
 # --- INCL06 --------------------------------------------------------------------
 
+
 def test_unpopulated_consent_date_is_not_evaluable_not_a_deviation() -> None:
     """An empty variable is a documentation gap, not a protocol violation."""
     result = incl06_consent_recorded(context(dm([SUBJECT])))[0]
@@ -167,9 +178,16 @@ def test_recorded_consent_date_passes() -> None:
 
 # --- EXCL30 --------------------------------------------------------------------
 
+
 def _lb(value: str) -> pd.DataFrame:
     return pd.DataFrame(
-        {"USUBJID": ["s1"], "LBTESTCD": ["HBA1C"], "LBBLFL": ["Y"], "LBNRIND": [""], "LBORRES": [value]}
+        {
+            "USUBJID": ["s1"],
+            "LBTESTCD": ["HBA1C"],
+            "LBBLFL": ["Y"],
+            "LBNRIND": [""],
+            "LBORRES": [value],
+        }
     )
 
 
@@ -192,6 +210,7 @@ def test_absent_hba1c_is_not_evaluable() -> None:
 
 
 # --- coverage honesty ----------------------------------------------------------
+
 
 def test_criteria_without_a_rule_all_carry_a_reason() -> None:
     """A blank in the coverage report would read as an oversight."""

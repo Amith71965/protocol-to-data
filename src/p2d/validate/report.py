@@ -26,7 +26,7 @@ def render_rules_markdown(issues: list[Issue]) -> str:
     add(
         "These are Pinnacle 21 / CDISC CORE style conformance checks, implemented here "
         "so each one is independently tested and each finding traces to a single named "
-        "rule rather than to \"the validator\"."
+        'rule rather than to "the validator".'
     )
     add("")
 

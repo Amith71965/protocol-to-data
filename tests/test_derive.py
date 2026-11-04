@@ -50,9 +50,7 @@ def test_missing_date_yields_missing_day_not_a_wrong_one() -> None:
 
 
 def test_sequence_numbers_start_at_one_within_each_subject() -> None:
-    frame = pd.DataFrame(
-        {"USUBJID": ["b", "a", "a", "b"], "VISITNUM": [2, 2, 1, 1]}
-    )
+    frame = pd.DataFrame({"USUBJID": ["b", "a", "a", "b"], "VISITNUM": [2, 2, 1, 1]})
 
     result = sequence_number(frame, "USUBJID", ["VISITNUM"])
 

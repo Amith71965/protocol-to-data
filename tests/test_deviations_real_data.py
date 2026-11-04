@@ -34,9 +34,7 @@ def test_the_two_known_mmse_deviations_are_found(evaluations) -> None:
     _, results = evaluations
 
     flagged = {
-        e.usubjid
-        for e in results
-        if e.criterion_id == "INCL03" and e.outcome is Outcome.DEVIATION
+        e.usubjid for e in results if e.criterion_id == "INCL03" and e.outcome is Outcome.DEVIATION
     }
 
     assert flagged == KNOWN_INCL03_DEVIATIONS

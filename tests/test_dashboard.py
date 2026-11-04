@@ -61,7 +61,10 @@ def test_outcome_order_is_stable_when_a_category_is_absent() -> None:
 def test_deviations_are_counted_by_distinct_subject(deviations) -> None:
     counts = data.deviations_by_criterion(deviations)
 
-    assert dict(zip(counts["criterion_id"], counts["subjects"], strict=True)) == {"INCL03": 1, "EXCL27": 1}
+    assert dict(zip(counts["criterion_id"], counts["subjects"], strict=True)) == {
+        "INCL03": 1,
+        "EXCL27": 1,
+    }
 
 
 def test_empty_deviations_do_not_raise(deviations) -> None:
@@ -130,9 +133,7 @@ def test_chart_height_grows_with_the_number_of_rows() -> None:
     """Too little height makes Vega silently drop a category's axis label."""
     small = charts.outcomes(pd.DataFrame({"outcome": ["PASS"], "evaluations": [1]}))
     large = charts.outcomes(
-        pd.DataFrame(
-            {"outcome": ["PASS", "DEVIATION", "NOT_EVALUABLE"], "evaluations": [1, 2, 3]}
-        )
+        pd.DataFrame({"outcome": ["PASS", "DEVIATION", "NOT_EVALUABLE"], "evaluations": [1, 2, 3]})
     )
 
     assert large.to_dict()["height"] > small.to_dict()["height"]

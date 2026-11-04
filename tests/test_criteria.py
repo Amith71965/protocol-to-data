@@ -37,6 +37,7 @@ def criterion(**overrides) -> dict:
 
 # --- schema --------------------------------------------------------------------
 
+
 def test_a_well_formed_criterion_validates() -> None:
     model = Criterion.model_validate(criterion())
 
@@ -86,6 +87,7 @@ def test_unknown_fields_are_rejected() -> None:
 
 # --- cache ---------------------------------------------------------------------
 
+
 def test_request_key_is_stable() -> None:
     a = request_key("anthropic", "m", "sys", "prompt", SCHEMA)
     b = request_key("anthropic", "m", "sys", "prompt", SCHEMA)
@@ -131,6 +133,7 @@ def test_cache_miss_returns_none(tmp_path) -> None:
 
 # --- caching provider ----------------------------------------------------------
 
+
 def test_provider_is_called_once_then_served_from_cache(tmp_path) -> None:
     inner = StubProvider('{"criteria": []}')
     provider = CachingProvider(inner, ResponseCache(tmp_path))
@@ -164,6 +167,7 @@ def test_cache_only_mode_serves_a_cached_answer(tmp_path) -> None:
 
 # --- extraction ----------------------------------------------------------------
 
+
 def test_extract_parses_a_valid_response() -> None:
     provider = StubProvider(json.dumps({"criteria": [criterion()]}))
 
@@ -194,6 +198,7 @@ def test_prompt_states_what_is_absent() -> None:
 
 # --- alignment -----------------------------------------------------------------
 
+
 @pytest.fixture
 def gold() -> pd.DataFrame:
     return pd.DataFrame(
@@ -208,8 +213,11 @@ def _criterion(cid: str, testability: str) -> Criterion:
     payload = criterion(criterion_id=cid, testability=testability)
     if testability != "TESTABLE":
         payload.update(
-            target_domain=None, target_variable=None, operator=None,
-            threshold_low=None, threshold_high=None,
+            target_domain=None,
+            target_variable=None,
+            operator=None,
+            threshold_low=None,
+            threshold_high=None,
         )
     return Criterion.model_validate(payload)
 
@@ -255,6 +263,7 @@ def test_wrong_testability_is_counted_separately(gold) -> None:
 
 
 # --- protocol text -------------------------------------------------------------
+
 
 def test_criteria_sections_are_found_past_the_table_of_contents() -> None:
     """The contents page lists the same headings with dot leaders."""

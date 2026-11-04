@@ -71,9 +71,7 @@ def main() -> int:
 
         _write_crf(to_crf(frame, domain_spec), name.lower())
         rebuilt = roundtrip(frame, domain_spec, references)
-        rebuilt = attach_carried(
-            split.collected, rebuilt, domain_spec, COMPARISON_KEYS[name]
-        )
+        rebuilt = attach_carried(split.collected, rebuilt, domain_spec, COMPARISON_KEYS[name])
         rebuilt.to_parquet(SDTM_DIR / f"{name.lower()}.parquet", index=False)
 
         report = compare(

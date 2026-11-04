@@ -49,6 +49,7 @@ def dataset(frame: pd.DataFrame, **kwargs) -> Dataset:
 
 # --- SD0001 required variables -------------------------------------------------
 
+
 def test_required_variables_pass() -> None:
     assert required_variables(dataset(vs_frame())) == []
 
@@ -63,14 +64,13 @@ def test_required_variables_flags_a_missing_identifier() -> None:
 
 
 def test_demographics_needs_no_sequence_variable() -> None:
-    frame = pd.DataFrame(
-        {"STUDYID": ["S"], "DOMAIN": ["DM"], "USUBJID": ["01-701-1015"]}
-    )
+    frame = pd.DataFrame({"STUDYID": ["S"], "DOMAIN": ["DM"], "USUBJID": ["01-701-1015"]})
 
     assert required_variables(Dataset(domain="DM", frame=frame)) == []
 
 
 # --- SD0002 domain value -------------------------------------------------------
+
 
 def test_domain_value_pass() -> None:
     assert domain_value_matches(dataset(vs_frame())) == []
@@ -84,6 +84,7 @@ def test_domain_value_flags_the_wrong_code() -> None:
 
 
 # --- SD0003 key uniqueness -----------------------------------------------------
+
 
 def test_key_uniqueness_pass() -> None:
     frame = pd.concat([vs_frame(), vs_frame(VSSEQ=[2.0])], ignore_index=True)
@@ -101,6 +102,7 @@ def test_key_uniqueness_flags_both_duplicates() -> None:
 
 # --- SD0004 sequence numbers ---------------------------------------------------
 
+
 def test_sequence_pass() -> None:
     assert sequence_is_a_positive_integer(dataset(vs_frame())) == []
 
@@ -111,6 +113,7 @@ def test_sequence_rejects_invalid_values(bad) -> None:
 
 
 # --- SD0005 ISO 8601 dates -----------------------------------------------------
+
 
 @pytest.mark.parametrize("good", ["2014", "2014-01", "2014-01-05", "2014-01-05T09:30"])
 def test_iso_dates_accept_full_and_partial_forms(good) -> None:
@@ -128,6 +131,7 @@ def test_blank_date_is_not_a_format_error() -> None:
 
 
 # --- SD0006 controlled terminology ---------------------------------------------
+
 
 @pytest.fixture
 def terminology(tmp_path):
@@ -170,6 +174,7 @@ def test_terminology_skipped_when_not_loaded() -> None:
 
 # --- SD0007 referential integrity ----------------------------------------------
 
+
 def test_referential_integrity_pass() -> None:
     assert subject_exists_in_demographics(dataset(vs_frame(), demographics=dm_frame())) == []
 
@@ -184,6 +189,7 @@ def test_referential_integrity_flags_an_unknown_subject() -> None:
 
 
 # --- SD0008 study day ----------------------------------------------------------
+
 
 def test_study_day_pass() -> None:
     """2014-01-05 against a start of 2014-01-02 is day 4."""
@@ -205,6 +211,7 @@ def test_study_day_ignores_records_without_a_date() -> None:
 
 # --- SD0009 standardised result ------------------------------------------------
 
+
 def test_standard_result_pass() -> None:
     assert standard_result_present(dataset(vs_frame())) == []
 
@@ -222,6 +229,7 @@ def test_non_numeric_result_needs_no_standardisation() -> None:
 
 
 # --- wiring --------------------------------------------------------------------
+
 
 def test_every_rule_is_registered() -> None:
     assert set(ALL_RULES) == {f"SD000{n}" for n in range(1, 10)}
