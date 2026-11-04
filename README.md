@@ -32,6 +32,8 @@ randomized and dosed despite falling outside the protocol's eligibility window**
 
 Both are asserted in the test suite, so they cannot quietly stop being found.
 
+![Ingest and mapping](docs/diagrams/ingest-and-mapping.svg)
+
 ## What it does
 
 1. **Ingest** — downloads 18 SDTM domains, `define.xml`, the CSR and CDISC terminology (120 MB),
@@ -62,6 +64,8 @@ CDISC Laboratory Test Code submission value — the standard term is `UREAN`. Th
 conformance issue in published regulatory-grade data, found by a rule with a test behind it.
 
 ### Why coverage is 23% and not higher
+
+![Criteria coverage](docs/diagrams/criteria-coverage.svg)
 
 Because that is what the data supports. Of the 24 criteria without a rule:
 
