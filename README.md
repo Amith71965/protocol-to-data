@@ -10,6 +10,14 @@ transdermal trial in mild-to-moderate Alzheimer's disease.
 > **Status:** under construction. Phases are landing one at a time; see the plan in
 > `docs/` and the honest limitations in `docs/limitations.md`.
 
+## Architecture
+
+![Target architecture](docs/diagrams/architecture-target.svg)
+
+The diagram is also available as an [explorable page](docs/diagrams/architecture-target.html)
+with route tracing and light/dark themes. This is the *target* design; phases are
+landing incrementally, so not every component exists yet.
+
 ## What it does
 
 1. **Map** a CRF-shaped source layer to CDISC SDTM domains against a written mapping spec
